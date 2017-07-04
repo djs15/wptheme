@@ -117,6 +117,9 @@ add_action( 'widgets_init', 'wptheme_widgets_init' );
  * Enqueue scripts and styles.
  */
 function wptheme_scripts() {
+	// enqueue Google fonts: source sans pro, PT serif
+	wp_enqueue_style( 'wptheme-fonts', 'https://fonts.googleapis.com/css?family=PT+Serif:400,400i,700,700i|Source+Sans+Pro:400,400i,600,900');
+
 	wp_enqueue_style( 'wptheme-style', get_stylesheet_uri() );
 
 	wp_enqueue_script( 'wptheme-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );

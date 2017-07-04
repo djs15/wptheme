@@ -22,8 +22,11 @@
 <body <?php body_class(); ?>>
 <div id="page" class="site">
 	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'wptheme' ); ?></a>
-
-	<?php the_header_image_tag(); ?>
+	<?php if ( get_header_image() && is_front_page()) : ?>
+		<figure class="header-image">
+			<?php the_header_image_tag(); ?>
+		</figure>
+	<?php endif;?>
 	<header id="masthead" class="site-header">
 		<div class="site-branding">
 			<?php

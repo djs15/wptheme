@@ -84,6 +84,44 @@ endif;
 add_action( 'after_setup_theme', 'wptheme_setup' );
 
 /**
+ * Register custom fonts.
+ */
+function wptheme_fonts_url() {
+	$fonts_url = '';
+
+	/**
+	 * Translators: If there are characters in your language that are not
+	 * supported by Source Sans Pro and PT Serif, translate this to 'off'. Do not translate
+	 * into your own language.
+	 */
+	$source_sans_pro = _x( 'on', 'Source Sans Pro font: on or off', 'wptheme' );
+	$pt_serif = _x( 'on', 'PT Serif font: on or off', 'wptheme' );
+
+	$font_families = array();
+
+	if ( 'off' !== $source_sans_pro ) {
+		$font_families[] = 'Source Sans Pro:400,400i,700,900';
+	}
+
+	if ( 'off' !== $pt_serif ) {
+		$font_families[] = 'PT Serif:400,400i,700,700i';
+	}
+
+
+	if ( in_array( 'on', array($source_sans_pro, $pt_serif) ) ) {
+
+		$query_args = array(
+			'family' => urlencode( implode( '|', $font_families ) ),
+			'subset' => urlencode( 'latin,latin-ext' ),
+		);
+
+		$fonts_url = add_query_arg( $query_args, 'https://fonts.googleapis.com/css' );
+	}
+
+	return esc_url_raw( $fonts_url );
+}
+
+/**
  * Set the content width in pixels, based on the theme's design and stylesheet.
  *
  * Priority 0 to make it available to lower priority callbacks.
@@ -118,7 +156,7 @@ add_action( 'widgets_init', 'wptheme_widgets_init' );
  */
 function wptheme_scripts() {
 	// enqueue Google fonts: source sans pro, PT serif
-	wp_enqueue_style( 'wptheme-fonts', 'https://fonts.googleapis.com/css?family=PT+Serif:400,400i,700,700i|Source+Sans+Pro:400,400i,600,900');
+	wp_enqueue_style( 'wptheme-fonts', wptheme_fonts_url());
 
 	wp_enqueue_style( 'wptheme-style', get_stylesheet_uri() );
 

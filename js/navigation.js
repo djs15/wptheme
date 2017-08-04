@@ -12,7 +12,7 @@
 
 		// Add dropdown toggle that displays child menu items.
 		var dropdownToggle = $( '<button />', { 'class': 'dropdown-toggle', 'aria-expanded': false })
-			.append( wpthemeScreenReaderText.icon )
+			.append( $( '<span />', { 'class': 'dropdown-symbol', text: "+" }) )
 			.append( $( '<span />', { 'class': 'screen-reader-text', text: wpthemeScreenReaderText.expand }) );
 
 		container.find( '.menu-item-has-children > a, .page_item_has_children > a' ).after( dropdownToggle );
@@ -28,7 +28,10 @@
 
 		container.find( '.dropdown-toggle' ).click( function( e ) {
 			var _this = $( this ),
-				screenReaderSpan = _this.find( '.screen-reader-text' );
+				screenReaderSpan = _this.find( '.screen-reader-text' ),
+				symbol = _this.find(".dropdown-symbol");
+
+			symbol.text( symbol.text() == "-" ? "+" : "-");
 
 			e.preventDefault();
 			_this.toggleClass( 'toggled-on' );
